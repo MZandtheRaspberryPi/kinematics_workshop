@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+lab_writeup/main.aux
+lab_writeup/main.bbl
+lab_writeup/main.blg
+lab_writeup/main.out
+lab_writeup/main.pdf

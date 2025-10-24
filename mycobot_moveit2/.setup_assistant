@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: ros_sim
+    relative_path: resource/robots/mycobot_280_pi/mycobot_280_pi_mod.urdf
+  srdf:
+    relative_path: config/firefighter.srdf
+  package_settings:
+    author_name: ""
+    author_email: ""
+    generated_timestamp: 1761244662
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
