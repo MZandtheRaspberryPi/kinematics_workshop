@@ -1,17 +1,17 @@
-# ros_sim
+# kinematics_workshop
 
 A general overview is presented here, details and steps are in sub-headers. First, pull the docker image. This contains ros2, pybullet, and moveit2 with all the libraries needed for this lab and everything compiled for you (moveit2 takes like 30min to compile), you're welcome. Then we will run the docker image letting it access X11 ports so as to bring up graphical user interfaces (GUIs) and letting it access the folder on our computer where we have our own code. Inside of the docker container, we will build our own code (should be fast, python) and then run it. To use the real robot we will download a special docker image (built for ARM, doesn't include moveit2 as it's too heavy) and then zip it and copy it to the raspberrypi on the robot. Then we will connect to the robot and run everything from there. Students in the past have had networking trouble related to MAC/Windows machines and therefore we avoid this issue by running everything on the robot.
 
 ## get docker file
 
 ```
-docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2024-10-24
+docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2025-10-24
 ```
 
 ## running examples on your laptop
 
 ```
-docker run --rm -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e QT_X11_NO_MITSHM=1 --network host -v /home/student/ros_sim:/home/developer/ros_ws/src/ros_sim mzandtheraspberrypi/ros_sim:2024-10-24
+docker run --rm --platform linux/amd64 -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e QT_X11_NO_MITSHM=1 --network host -v /home/student/kinematics_workshop:/home/developer/ros_ws/src/ros_sim mzandtheraspberrypi/ros_sim:2025-10-24
 cd ros_ws
 colcon build --symlink-install --packages-up-to ros_sim ros_arm_controller ros_cobot_controller
 source install/setup.bash
@@ -55,47 +55,54 @@ Robot ip address: 10.42.0.1, user: er, password: elephant (or Elephant) —“ss
 
 Compress and copy the folder over
 ```
-tar -czf /home/$USER/ros_sim.tar.gz /home/$USER/ros_sim
-scp /home/$USER/ros_sim.tar.gz er@10.42.0.1:/home/er
+tar -czf /home/$USER/kinematics_workshop.tar.gz /home/$USER/kinematics_workshop
+scp /home/$USER/kinematics_workshop.tar.gz er@10.42.0.1:/home/er
 ```
 
 Unzip the folder
 ```
 ssh er@10.42.0.1
-tar -xzf ros_sim.tar.gz
+tar -mxzf kinematics_workshop.tar.gz
 ```
 
 ### copy arm docker image to the cobot
+
+This step only needs to be done once.
+
+Ensure your computer is connected to the internet:
 
 ```
 cd ~
 docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 docker image save --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24 | gzip > docker_ros_sim_arm.tar.gz
+```
+
+Now connect to the robot's WIFI.
+```
 scp /home/$USER/ros_sim.tar.gz er@10.42.0.1:/home/er
 ```
 ```
 ssh er@10.42.0.1:/home/er
-docker load --platform linux/arm64 --input docker_ros_sim_arm.tar.gz
+docker system prune -a
+docker images # remove big images you see here
+docker load --input docker_ros_sim_arm.tar.gz
+rm docker_ros_sim_arm.tar.gz
 ```
 
 
 ### running examples on the robot
 
 ```
-docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/ros_sim:/home/developer/ros_ws/src/ros_sim -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2025-10-24
+docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2025-10-24
 cd ros_ws
 colcon build --symlink-install
-source /opt/ros/humble/setup.bash
 source install/setup.bash
-sudo usermod -a -G dialout $USERNAME
-sudo su developer
 ros2 run ros_cobot_controller cobot_controller
 ```
 
 ```
 docker exec -it $(docker ps -lq) /bin/bash
 cd ros_ws
-source /opt/ros/humble/setup.bash
 source install/setup.bash
 ros2 run ros_arm_controller robo_controller --ros-args -p use_sim_time:=false
 ```
@@ -105,7 +112,7 @@ ros2 run ros_arm_controller robo_controller --ros-args -p use_sim_time:=false
 Compress the entire folder so we can copy it over to the robot and build the docker image there...
 
 ```
-tar -czf /home/$USER/ros_sim.tar.gz /home/$USER/ros_sim
+tar -czf /home/$USER/kinematics_workshop.tar.gz /home/$USER/kinematics_workshop
 ```
 
 Connect to the robot's WIFI via your Ubuntu wifi interface (top right of screen). The WLAN should be named after the robot ID which is on a label on the base of the robot. Double check you are connected to the right robot--if you move a robot from somebody else's group that may surprise them and cause some damage to the robot or people. Check the robot's IP address, and SCP the file into the robot.
@@ -122,13 +129,13 @@ Connect HDMI and mouse to robot, switch wifi to one with internet using virtual 
 
 Copy the folder over....
 ```
-scp /home/$USER/ros_sim.tar.gz er@192.168.1.113:/home/er
+scp /home/$USER/kinematics_workshop.tar.gz er@192.168.1.113:/home/er
 ```
 
 SSH via new connection with ip address (from angry ip scanner for example, will depend on network you connect to)
 ```
 ssh er@192.168.1.113
-tar -xzf ros_sim.tar.gz
+tar -xzf kinematics_workshop.tar.gz
 docker build -f docker/Dockerfile -t ros_sim .
 docker save ros_sim:latest | gzip > ros_sim_latest.tar.gz
 ```
