@@ -318,7 +318,7 @@
   <joint name="joint6output_to_wand" type="fixed">
     <parent link="joint6_flange"/>
     <child link="wand"/>
-    <origin xyz= "-0.028284271 -0.028284271 0.02" rpy = "0.0 0.0 0.0"/>  
+    <origin xyz= "-0.028284271 -0.028284271 0.035" rpy = "0.0 0.0 0.0"/>  
   </joint>
 
   <joint name="wand_to_wand_tip" type="fixed">
