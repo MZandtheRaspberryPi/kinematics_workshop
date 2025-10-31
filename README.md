@@ -12,6 +12,7 @@ docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2025-10-24
 
 ```
 docker run --rm --platform linux/amd64 -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e QT_X11_NO_MITSHM=1 --network host -v /home/student/kinematics_workshop:/home/developer/ros_ws/src/ros_sim mzandtheraspberrypi/ros_sim:2025-10-24
+sudo apt-get remove -y python3-matplotlib
 cd ros_ws
 colcon build --symlink-install --packages-up-to ros_sim ros_arm_controller ros_cobot_controller
 source install/setup.bash
@@ -94,6 +95,7 @@ rm docker_ros_sim_arm.tar.gz
 
 ```
 docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2025-10-24
+sudo apt-get remove -y python3-matplotlib
 cd ros_ws
 colcon build --symlink-install
 source install/setup.bash
