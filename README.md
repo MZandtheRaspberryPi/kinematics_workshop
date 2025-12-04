@@ -4,8 +4,14 @@ A general overview is presented here, details and steps are in sub-headers. Firs
 
 ## get docker file
 
+If on a system with AMD architecture:
 ```
 docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2025-10-24
+```
+
+If on a system with ARM architecture (also update the image in the commands in the README)
+```
+docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 ```
 
 ## running examples on your laptop
@@ -96,7 +102,7 @@ rm docker_ros_sim_arm.tar.gz
 ### running examples on the robot
 
 ```
-docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2025-10-24
+docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2024-10-24
 sudo apt-get remove -y python3-matplotlib
 cd ros_ws
 colcon build --symlink-install
