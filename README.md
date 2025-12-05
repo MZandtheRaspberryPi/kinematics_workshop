@@ -57,9 +57,10 @@ source install/setup.bash
 ros2 run ros_arm_controller robo_controller --ros-args -p use_sim_time:=true
 ```
 
-To run Moveit2:
+To run Moveit2, note this is NOT included in ARM images (as it would require a lot of setup).
 ```
 colcon build --symlink-install --packages-select mycobot_moveit2
+source install/setup.bash
 ros2 launch mycobot_moveit2 demo.launch.py
 ```
 
