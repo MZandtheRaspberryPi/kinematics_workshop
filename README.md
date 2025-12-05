@@ -2,6 +2,11 @@
 
 A general overview is presented here, details and steps are in sub-headers. First, pull the docker image. This contains ros2, pybullet, and moveit2 with all the libraries needed for this lab and everything compiled for you (moveit2 takes like 30min to compile), you're welcome. Then we will run the docker image letting it access X11 ports so as to bring up graphical user interfaces (GUIs) and letting it access the folder on our computer where we have our own code. Inside of the docker container, we will build our own code (should be fast, python) and then run it. To use the real robot we will download a special docker image (built for ARM, doesn't include moveit2 as it's too heavy) and then zip it and copy it to the raspberrypi on the robot. Then we will connect to the robot and run everything from there. Students in the past have had networking trouble related to MAC/Windows machines and therefore we avoid this issue by running everything on the robot.
 
+## Pre-requisites
+* Ubuntu 22.04 (via a VM if needed)
+* docker engine installed, and post install steps run (so that you can run without `sudo`)
+* some free harddrive space and familiarity with ros2
+
 ## get docker file
 
 If on a system with AMD architecture:
@@ -15,6 +20,9 @@ docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 ```
 
 ## running examples on your laptop
+
+MAC USERS:
+Run `xhost +` in the terminal before you do the docker run command.
 
 ```
 cd $HOME
