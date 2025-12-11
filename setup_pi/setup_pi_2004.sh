@@ -22,6 +22,10 @@ sudo rm -rf /home/er/catkin_ws
 sudo rm -rf /home/er/colcon_ws
 sudo rm -rf /home/er/.cache
 
+# remove their AP mode config
+nmcli c delete Hotspot
+sudo rm /home/er/.config/autostart/nmcli.desktop
+
 sudo apt update -y
 
 # Add Docker's official GPG key:
@@ -53,6 +57,7 @@ nmcli d wifi hotspot ifname wlan0 ssid ${WLAN_SSID} password ${WLAN_PASS} con-na
 nmcli c down my-hotspot
 nmcli c modify my-hotspot connection.autoconnect yes
 nmcli c modify my-hotspot connection.autoconnect-priority 999
+
 
 nmcli c up my-hotspot
 
