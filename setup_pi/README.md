@@ -38,7 +38,7 @@ Git clone this repo, and run it with sudo. It takes the name of the wifi network
 ```
 cd ~
 git clone https://github.com/MZandtheRaspberryPi/kinematics_workshop.git
-cd ros_sim/setup_pi
+cd kinematics_workshop/setup_pi
 bash setup_pi_2004.sh mycobot_23 my_wifi_pass
 ```
 
