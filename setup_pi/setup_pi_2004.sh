@@ -12,8 +12,15 @@ fi
 WLAN_SSID=$1
 WLAN_PASS=$2
 
+# ros lists give error as too old os
 sudo rm /etc/apt/sources.list.d/ros-latest.list
 sudo rm /etc/apt/sources.list.d/ros2.list
+
+# free up space
+sudo rm -r /home/er/.pyenv
+sudo rm -r /home/er/catkin_ws
+sudo rm -r /home/er/colcon_ws
+sudo rm -r /home/er/.cache
 
 sudo apt update -y
 
