@@ -15,10 +15,9 @@ WLAN_PASS=$2
 sudo rm /etc/apt/sources.list.d/ros-latest.list
 sudo rm /etc/apt/sources.list.d/ros2.list
 
-sudo apt update
+sudo apt update -y
 
 # Add Docker's official GPG key:
-sudo apt update
 sudo apt install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
