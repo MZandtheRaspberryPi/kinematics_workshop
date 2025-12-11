@@ -12,8 +12,8 @@ fi
 WLAN_SSID=$1
 WLAN_PASS=$2
 
-sudo rm /etc/apt/sources.list/d/ros-latest.list
-sudo rm /etc/apt/sources.list/d/ros2.list
+sudo rm /etc/apt/sources.list.d/ros-latest.list
+sudo rm /etc/apt/sources.list.d/ros2.list
 
 sudo apt update
 
