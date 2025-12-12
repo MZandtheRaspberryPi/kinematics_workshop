@@ -372,17 +372,17 @@ class TrajectoryPlanner:
             bool: Whether all solves converged succesfully
         """
 
-        if os.path.exists(self.cache_file):
-            with open(self.cache_file, "rb") as file_handle:
-                data = pickle.load(file_handle)
-            self.traj_times = data["times"]
-            self.traj_angles = data["angles_traj"]
-            self.xyz_goals = data["xyz_goals"]
-            self.ori_goals = data["ori_goals"]
-            self.xyz_calc = data["xyz_calc"]
-            self.ori_calc = data["ori_calc"]
-            self.names = data["names"]
-            return
+        # if os.path.exists(self.cache_file):
+        #     with open(self.cache_file, "rb") as file_handle:
+        #         data = pickle.load(file_handle)
+        #     self.traj_times = data["times"]
+        #     self.traj_angles = data["angles_traj"]
+        #     self.xyz_goals = data["xyz_goals"]
+        #     self.ori_goals = data["ori_goals"]
+        #     self.xyz_calc = data["xyz_calc"]
+        #     self.ori_calc = data["ori_calc"]
+        #     self.names = data["names"]
+        #     return
 
         cur_time = self.start_time
         # we adjust the starting segment such that it starts from current xzy
