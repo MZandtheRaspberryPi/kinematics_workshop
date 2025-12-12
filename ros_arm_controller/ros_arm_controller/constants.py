@@ -1,7 +1,7 @@
 import math
 
 # this directory is where plots will be saved and the trajectory as a binary file
-CACHE_DIR = "/home/developer/ros_ws/src/ros_sim"
+CACHE_DIR = "/home/developer/ros_ws/src/kinematics_workshop"
 DEFAULT_EPS_XYZ = 0.002
 DEFAULT_EPS_ORI = 0.01
 DEFAULT_MAX_IT = 30
