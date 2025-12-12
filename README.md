@@ -73,13 +73,15 @@ Robot ip address: 10.42.0.1, user: er, password: elephant (or Elephant) —“ss
 
 Compress and copy the folder over
 ```
-tar -czf /home/$USER/kinematics_workshop.tar.gz /home/$USER/kinematics_workshop
+cd $HOME
+tar -czf kinematics_workshop.tar.gz kinematics_workshop
 scp /home/$USER/kinematics_workshop.tar.gz er@10.42.0.1:/home/er
 ```
 
 Unzip the folder
 ```
 ssh er@10.42.0.1
+cd /home/er
 tar -mxzf kinematics_workshop.tar.gz
 ```
 
