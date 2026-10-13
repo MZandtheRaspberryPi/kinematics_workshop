@@ -275,6 +275,26 @@ class PybulletSim(Simulator):
         )
         return link_world_pos, link_world_ori, link_lin_vel, link_ang_vel
 
+    def do_fk(self, link_name: str, cur_angles: Tuple[float]):
+        link_idx = self.link_name_to_id[link_name]
+        
+        prior_joint_angles = copy.copy(self.__joint_pos)
+        for i in range(len(cur_angles)):
+            joint_idx = self.joint_indices[i]
+            self.pybullet_client.resetJointState(
+                self.bot_pybullet, joint_idx, cur_angles[i]
+            )
+        
+        link_world_pos, link_world_ori, link_lin_vel, link_ang_vel = self.get_link_state(link_name)
+
+        for i in range(len(prior_joint_angles)):
+            joint_idx = self.joint_indices[i]
+            self.pybullet_client.resetJointState(
+                self.bot_pybullet, joint_idx, prior_joint_angles[i]
+            )
+        
+        return link_world_pos, link_world_ori, link_lin_vel, link_ang_vel
+
     def get_link_jacobian(
         self, link_name: str, joint_positions: Tuple[float]
     ) -> Tuple[Tuple[float], Tuple[float]]:

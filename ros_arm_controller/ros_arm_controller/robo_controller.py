@@ -18,6 +18,7 @@ from ros_arm_controller.kinematics import (
     get_ik,
     MYCOBOT_DOF_NAMES,
     rot_to_euler,
+    quat_to_euler
 )
 from ros_arm_controller.trajectory import TrajectoryPlanner
 from ros_arm_controller.constants import (
@@ -25,6 +26,7 @@ from ros_arm_controller.constants import (
     DEFAULT_EPS_XYZ,
     DEFAULT_EPS_ORI,
     JOINT_ANGLE_DIFF_TOL,
+    LINK_NAME
 )
 
 
@@ -171,9 +173,13 @@ class RoboController(Node):
 
         cur_angles = self.cur_joint_angles
 
-        transform = get_transform_last_frame(cur_angles)
-        euler_cur = rot_to_euler(transform[:3, :3])
-        xyz_cur = transform[:3, 3]
+        if self.traj_planner is not None and self.traj_planner.use_pybullet_for_ik:
+            xyz_cur, link_world_ori, link_lin_vel, link_ang_vel = self.traj_planner.sim.do_fk(LINK_NAME, cur_angles)
+            euler_cur = quat_to_euler(link_world_ori)
+        else:
+            transform = get_transform_last_frame(cur_angles)
+            euler_cur = rot_to_euler(transform[:3, :3])
+            xyz_cur = transform[:3, 3]
 
         if xyz_cur[2] < self.z_threshold:
             self.xyz_plotted.append(xyz_cur)
