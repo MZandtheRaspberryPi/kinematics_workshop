@@ -212,3 +212,9 @@ lab_writeup/main.bbl
 lab_writeup/main.blg
 lab_writeup/main.out
 lab_writeup/main.pdf
+
+traj.pickle
+traj_act.png
+traj_joint_angles.png
+traj_ori_plan_vs_solved.png
+traj_plan_vs_solved.png
