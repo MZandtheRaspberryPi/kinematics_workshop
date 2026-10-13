@@ -27,7 +27,7 @@ Run `xhost +` in the terminal before you do the docker run command.
 ```
 cd $HOME
 git clone https://github.com/MZandtheRaspberryPi/kinematics_workshop.git
-docker run --rm --platform linux/amd64 -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e QT_X11_NO_MITSHM=1 --network host -v /home/$USER/kinematics_workshop:/home/developer/ros_ws/src/ros_sim mzandtheraspberrypi/ros_sim:2025-10-24
+docker run --rm --platform linux/amd64 -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -e QT_X11_NO_MITSHM=1 --network host -v /home/$USER/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop mzandtheraspberrypi/ros_sim:2025-10-24
 sudo apt-get remove -y python3-matplotlib
 cd ros_ws
 colcon build --symlink-install --packages-select ros_sim ros_arm_controller ros_cobot_controller
