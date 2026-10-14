@@ -11,12 +11,12 @@ A general overview is presented here, details and steps are in sub-headers. Firs
 
 If on a system with AMD architecture:
 ```
-docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2025-10-24
+sudo docker pull --platform linux/amd64 mzandtheraspberrypi/ros_sim:2025-10-24
 ```
 
 If on a system with ARM architecture (also update the image in the commands in the README)
 ```
-docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
+sudo docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 ```
 
 ## running examples on your laptop
