@@ -24,7 +24,7 @@ We use Raspberry Pi Imager to flash it, selecting Raspberry Pi 4, selecting the 
 ![pi_imager](./pi_imager.PNG)
 
 ## Assemble the Robot
-Assemble the robot together. Start with the grid paper on the bottom. Put the mounting plate for the camera on top. Put the G base on top, aligning to markings on grid paper.
+Assemble the robot together. Start with the grid paper on the bottom. Put the mounting plate for the camera on top. Put the G base on top, aligning to markings on grid paper. Ensure that when unpowered, all the robot joints rotate smoothly with not undue effort.
 
 From here, plug in the robot and power it on. You should see it boot on your monitor.
 
@@ -42,8 +42,10 @@ cd kinematics_workshop/setup_pi
 bash setup_pi_2004.sh mycobot_23 my_wifi_pass
 ```
 
+If you get an error like The certificate is not trusted...make sure that the system time is synced and date and time is correct, and try `sudo apt-get install --reinstall ca-certificates && sudo update-ca-certificates`.
+
 # testing
-After we run the setup script, it should restart the pi to apply some of the changes (specifically user group rules). Then ensure you can ssh into the robot with the `er` user. Then the below and the robot should move.
+After we run the setup script, it should restart the pi to apply some of the changes (specifically user group rules). Then ensure you can ssh into the robot with the `er` user. If this fails, use sudo to reset the password of the `er` user, or check `/var/log/auth.log` for another failure. Then the below and the robot should move.
 
 ```
 docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2024-10-24
