@@ -43,10 +43,13 @@ bash setup_pi_2004.sh mycobot_23 my_wifi_pass
 ```
 
 # testing
-After we run the setup script, it should restart the pi to apply some of the changes (specifically user group rules). Then:
+After we run the setup script, it should restart the pi to apply some of the changes (specifically user group rules). Then ensure you can ssh into the robot with the `er` user. Then the below and the robot should move.
 
 ```
-mycobot-up
+docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2024-10-24
+sudo apt-get remove -y python3-matplotlib
+cd ros_ws
+colcon build --symlink-install
 source install/setup.bash
-ros2 launch mycobot_interface_2 mycobot_comms_launch.py use_realsense:=True
+ros2 run ros_cobot_controller cobot_controller
 ```

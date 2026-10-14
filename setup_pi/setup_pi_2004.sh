@@ -22,9 +22,9 @@ sudo rm -rf /home/er/catkin_ws
 sudo rm -rf /home/er/colcon_ws
 sudo rm -rf /home/er/.cache
 
-# we have issue with SSH'ing as the er user over the network we create, fix this before re-using this script
-echo "we have issue with SSH'ing as the er user over the network we create, fix this before re-using this script!" 1>&2
-exit 64
+# # we have issue with SSH'ing as the er user over the network we create, fix this before re-using this script
+# echo "we have issue with SSH'ing as the er user over the network we create, fix this before re-using this script!" 1>&2
+# exit 64 # 2026-10-14, seems to be gone?
 
 # remove their AP mode config
 nmcli c delete Hotspot
