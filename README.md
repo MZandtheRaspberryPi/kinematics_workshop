@@ -128,53 +128,6 @@ source install/setup.bash
 ros2 run ros_arm_controller robo_controller --ros-args -p use_sim_time:=false
 ```
 
-
-### If the image hasn't yet been built on the cobot:
-Compress the entire folder so we can copy it over to the robot and build the docker image there...
-
-```
-tar -czf /home/$USER/kinematics_workshop.tar.gz /home/$USER/kinematics_workshop
-```
-
-Connect to the robot's WIFI via your Ubuntu wifi interface (top right of screen). The WLAN should be named after the robot ID which is on a label on the base of the robot. Double check you are connected to the right robot--if you move a robot from somebody else's group that may surprise them and cause some damage to the robot or people. Check the robot's IP address, and SCP the file into the robot.
-
-Connect to robot WiFi—“mycobot_23”, password: autonomy
-Robot ip address: 10.42.0.1, user: er, password: elephant (or Elephant) —“ssh er@10.42.0.1”
-
-enable on screen keyboard
-```
-gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true
-```
-
-Connect HDMI and mouse to robot, switch wifi to one with internet using virtual keyboard (to build docker image).
-
-Copy the folder over....
-```
-scp /home/$USER/kinematics_workshop.tar.gz er@192.168.1.113:/home/er
-```
-
-SSH via new connection with ip address (from angry ip scanner for example, will depend on network you connect to)
-```
-ssh er@192.168.1.113
-tar -xzf kinematics_workshop.tar.gz
-docker build -f docker/Dockerfile -t ros_sim .
-docker save ros_sim:latest | gzip > ros_sim_latest.tar.gz
-```
-
-copy docker image back out
-```
-scp er@192.168.1.113:/home/er/ros_sim_latest.tar.gz .
-```
-
-
-## building dockerfile
-
-Has to be built for ARM and for AMD. don't try and build it on a raspberry pi 3b+. Use 4 or higher more. Or build it on a jetson and then transfer it.
-
-```
-docker build -f docker/Dockerfile -t ros_sim --progress plain .
-```
-
 ## citations
 
 https://mathweb.ucsd.edu/~sbuss/ResearchWeb/ikmethods/SdlsPaper.pdf for overview including jacobian iterations, and damped least squares
