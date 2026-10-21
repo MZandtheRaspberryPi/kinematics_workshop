@@ -21,6 +21,8 @@ sudo docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 
 ## running examples on your laptop
 
+First we run the simulation with the robot:
+
 MAC USERS:
 Run `xhost +` in the terminal before you do the docker run command.
 
@@ -43,12 +45,12 @@ source install/setup.bash
 ros2 topic list
 ```
 
-A command may be published with the below:
+A command may be published with the below which should move the robot.
 ```
 ros2 topic pub -1 /target_joint_states sensor_msgs/msg/JointState "{position: [1.5, 0.0, 0.0, 0.0, 0.0, 0.0]}"
 ```
 
-To run the controller:
+To run the controller and follow the trajectory. Note graphs will be produced visualizing the trajectory in the `kinematics_workshop` base folder upon succesful completion of one trajectory.
 
 ```
 docker exec -it $(docker ps -lq) /bin/bash
