@@ -85,30 +85,6 @@ cd /home/er
 tar -mxzf kinematics_workshop.tar.gz
 ```
 
-### copy arm docker image to the cobot
-
-This step only needs to be done once.
-
-Ensure your computer is connected to the internet:
-
-```
-cd ~
-docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
-docker image save --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24 | gzip > docker_ros_sim_arm.tar.gz
-```
-
-Now connect to the robot's WIFI.
-```
-scp /home/$USER/ros_sim.tar.gz er@10.42.0.1:/home/er
-```
-```
-ssh er@10.42.0.1:/home/er
-docker system prune -a
-docker images # remove big images you see here
-docker load --input docker_ros_sim_arm.tar.gz
-rm docker_ros_sim_arm.tar.gz
-```
-
 
 ### running examples on the robot
 
