@@ -74,6 +74,7 @@ Robot ip address: 10.42.0.1, user: er, password: Elephant (or elephant) — to c
 
 ### running examples on the robot
 
+When you run the below block, the robot should move to point upwards. At this point you won't be able to move the motors by hand anymore as the servos will be powered.
 ```
 docker run --rm -it --network host --device /dev/ttyAMA0 -v /home/er/kinematics_workshop:/home/developer/ros_ws/src/kinematics_workshop -v /dev/shm:/dev/shm mzandtheraspberrypi/ros_sim:2024-10-24
 sudo apt-get remove -y python3-matplotlib
