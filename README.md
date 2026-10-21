@@ -66,24 +66,10 @@ ros2 launch mycobot_moveit2 demo.launch.py
 
 ## Running on the arm
 
-### copy your code over
+### connect to the arm
 
 Connect to the robot's WIFI. The WLAN should be named after the robot ID which is on a label on the base of the robot. Double check you are connected to the right robot--if you move a robot from somebody else's group that may surprise them and cause some damage to the robot or people.  SSID “mycobot_23”, password: "autonomy"
-Robot ip address: 10.42.0.1, user: er, password: elephant (or Elephant) —“ssh er@10.42.0.1”
-
-Compress and copy the folder over
-```
-cd $HOME
-tar -czf kinematics_workshop.tar.gz kinematics_workshop
-scp /home/$USER/kinematics_workshop.tar.gz er@10.42.0.1:/home/er
-```
-
-Unzip the folder
-```
-ssh er@10.42.0.1
-cd /home/er
-tar -mxzf kinematics_workshop.tar.gz
-```
+Robot ip address: 10.42.0.1, user: er, password: Elephant (or elephant) — to connect use ssh: `ssh er@10.42.0.1`.
 
 
 ### running examples on the robot
@@ -97,6 +83,19 @@ source install/setup.bash
 ros2 run ros_cobot_controller cobot_controller
 ```
 
+From here, try to publish joint state messages and see if the robot moves:
+```
+sudo docker exec -it $(sudo docker ps -lq) /bin/bash
+cd ros_ws
+source install/setup.bash
+ros2 topic pub -1 /target_joint_states sensor_msgs/msg/JointState "{position: [1.5, 0.0, 0.0, 0.0, 0.0, 0.0]}"
+```
+
+Now you can work on the trajectory in simulation, disconnecting from wifi, and once you have a trajectory you like put it on the robot by scp'ing any files you changed over to the robot or editing it on the robot via command line.
+
+To scp from your computer: `scp $HOME/kinematics_workshop/ros_arm_controller/ros_arm_controller/trajectory.py er@10.42.0.1:/home/er/kinematics_workshop/ros_arm_controller/ros_arm_controller/trajectory.py`
+
+To run your trajectory:
 ```
 docker exec -it $(docker ps -lq) /bin/bash
 cd ros_ws
