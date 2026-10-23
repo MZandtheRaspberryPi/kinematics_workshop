@@ -1,13 +1,19 @@
 # kinematics_workshop
 
-A general overview is presented here, details and steps are in sub-headers. First, pull the docker image. This contains ros2, pybullet, and moveit2 with all the libraries needed for this lab and everything compiled for you (moveit2 takes like 30min to compile), you're welcome. Then we will run the docker image letting it access X11 ports so as to bring up graphical user interfaces (GUIs) and letting it access the folder on our computer where we have our own code. Inside of the docker container, we will build our own code (should be fast, python) and then run it. To use the real robot we will download a special docker image (built for ARM, doesn't include moveit2 as it's too heavy) and then zip it and copy it to the raspberrypi on the robot. Then we will connect to the robot and run everything from there. Students in the past have had networking trouble related to MAC/Windows machines and therefore we avoid this issue by running everything on the robot.
+A general overview is presented here, details and steps are in sub-headers.
+
+For working in simulation, first pull the docker image. This contains ros2, pybullet, and moveit2 with all the libraries needed for this lab and everything compiled for you (moveit2 takes like 30min to compile), you're welcome. Then we will run the docker image letting it access X11 ports so as to bring up graphical user interfaces (GUIs) and letting it access the folder on our computer where we have our own code. Inside of the docker container, we will build our own code (should be fast, python) and then run it. We will do introspection to understand the system and look at graphs showing trajectories to evaluate it. We will make our changes and test in simulation before testing on the real robot.
+
+To use the real robot we will use a special docker image (built for ARM, doesn't include moveit2 as it's too heavy) that has probably been pre-loaded for you onto the robot. Then we will connect to the robot (pre-configured to broadcast wifi) and run everything on the robot's computer. Students in the past have had networking trouble related to MAC/Windows machines and therefore we avoid this issue by running everything on the robot. Students have also had trouble related to displays/monitors and we avoid this issue by running everything over ssh with no GUI, providing a simulator on student laptops to do introspection and testing.
 
 ## Pre-requisites
 * Ubuntu 22.04 (via a VM if needed)
 * docker engine installed, and post install steps run (so that you can run without `sudo`)
 * some free harddrive space and familiarity with ros2
 
-## get docker file
+## simulation
+
+### get docker file
 
 If on a system with AMD architecture:
 ```
@@ -19,7 +25,7 @@ If on a system with ARM architecture (also update the image in the commands in t
 sudo docker pull --platform linux/arm64 mzandtheraspberrypi/ros_sim:2024-10-24
 ```
 
-## running examples on your laptop
+### running examples on your laptop
 
 First we run the simulation with the robot:
 
@@ -112,6 +118,7 @@ https://mathweb.ucsd.edu/~sbuss/ResearchWeb/ikmethods/SdlsPaper.pdf for overview
 
 ## troubleshooting:
 
+An issue relating to X Error of failed request, simply close the docker image, re-run it, and try again.
 ```
 developer@student-AORUS-5-KB:~/ros_ws$ ros2 run ros_sim pybullet_ex 
 pybullet build time: Sep 30 2025 11:26:09
@@ -157,4 +164,10 @@ X Error of failed request:  BadValue (integer parameter out of range for operati
   Serial number of failed request:  61
   Current serial number in output stream:  62
 [ros2run]: Process exited with failure 1
+```
+
+An issue relating to failed udp writes appearing in logs frequently. Turn off wifi on your computer, restart it, and try again. ROS2 is a network protocol and it may be trying to talk to other computers on the network.
+
+```
+tev: ddsi_udp_conn_write to udp/10.23.12.21:7410 failed with retcode -1
 ```
